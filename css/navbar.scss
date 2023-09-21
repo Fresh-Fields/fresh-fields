@@ -1,3 +1,16 @@
+@use './global.scss' as g;
+
+/*
+ * to use global variables just use
+ * g.$variable
+ * where "variable" is the variable name
+ * example:
+ *     body {
+ *         background: g.$background;
+ *         color: g.$text;
+ *     }
+ */
+
 :root {
     padding: 0;
     margin: 0;
