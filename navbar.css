@@ -1,0 +1,45 @@
+:root {
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    margin:0;
+    padding:0;
+}
+
+nav {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    position: relative;
+    padding-right: 30px;
+    background-color: #5B0888;
+}
+
+.nav_button {
+    position: relative;
+    margin-right: 10%;
+    color: #6c757d;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem; 
+    width: 120px;
+    height: 60%;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #fff;
+    background-color: #1e1e30;
+    transition: background-color 0.3s ease;
+}
+
+.nav_button:hover {
+    background-color: #5B0888;
+}
+
+.nav_button:last-child{
+    margin-left: auto;
+}
