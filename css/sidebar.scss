@@ -1,4 +1,17 @@
-.sidebar{
+@use './global.scss' as g;
+
+/*
+ * to use global variables just use
+ * g.$variable
+ * where "variable" is the variable name
+ * example:
+ *     body {
+ *         background: g.$background;
+ *         color: g.$text;
+ *     }
+ */
+
+.sidebar {
     display: flex;
     flex-direction: row;
     top: 60px;
@@ -6,35 +19,30 @@
     bottom: 0;
     font-size: 1.7rem;
     transition: width 200ms ease;
-    
 }
 
-.icon{
+.icon {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 10px 10px 10px;
     color: #fff;
     background-color: green;
-    width: 30px;
-    
-    
+    width: g.$sidebar-width;
 }
 
-.icon_name{
-    display: flex;
+.icon_name {
+    // display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 10px 10px 10px;
-    width:100px;
+    width: 100px;
     background-color: red;
     text-decoration: none;
     color: #fff;
-    visibility: hidden;
+    display: none;
 }
 
-.sidebar:hover>.icon_name{
-    visibility: visible;
+.sidebar:hover>.icon_name {
+    display: flex;
 }
-
-
