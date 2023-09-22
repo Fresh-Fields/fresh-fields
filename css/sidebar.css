@@ -1,0 +1,40 @@
+.sidebar{
+    display: flex;
+    flex-direction: row;
+    top: 60px;
+    position: absolute;
+    bottom: 0;
+    font-size: 1.7rem;
+    transition: width 200ms ease;
+    
+}
+
+.icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px 10px 10px;
+    color: #fff;
+    background-color: green;
+    width: 30px;
+    
+    
+}
+
+.icon_name{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px 10px 10px;
+    width:100px;
+    background-color: red;
+    text-decoration: none;
+    color: #fff;
+    visibility: hidden;
+}
+
+.sidebar:hover>.icon_name{
+    visibility: visible;
+}
+
+

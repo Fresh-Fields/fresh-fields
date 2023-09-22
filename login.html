@@ -6,19 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/css/global.scss">
   <link rel="stylesheet" href="/css/navbar.scss">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
   <title>Vite App</title>
 </head>
 
 <body>
   <!-- insert navigation bar -->
   <nav>
-    <button class="nav_button">
+    <button class="start_button">    <!--nav is used for button so dont use it for any other-->
       Get Started
     </button>
   </nav>
 
   <!-- insert sidebar -->
   <div class="sidebar">
+    <div class="icon">
+      <div><ion-icon name="home-outline"></ion-icon></div>
+      <div><ion-icon name="settings-outline"></ion-icon></div>
+      <div><ion-icon name="at-outline"></ion-icon></div>
+    </div>              <!-- In sidebar the class sidebar is given flex box property row and its child with column -->
+    <div class="icon_name">
+      <div><a href>Home</a></div>
+      <div><a href>Setting</a></div>
+      <div><a href>About</a></div>
+      
+    </div>
   </div>
 
   <!-- insert login page -->
@@ -26,6 +39,8 @@
   </div>
 
   <script type="module" src="/src/main.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
