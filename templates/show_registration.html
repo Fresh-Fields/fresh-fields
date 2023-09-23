@@ -1,0 +1,41 @@
+<!-- show_registration.html -->
+{% extends 'base.html' %}
+{% block title %} Registration Details {% endblock title %} 
+{% block body %}
+
+<div class="container my-3">
+    <h2>Registration Details</h2>
+    {% if registration %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{{ registration.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">District</th>
+                <td>{{ registration.district }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>{{ registration.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Farmer ID</th>
+                <td>{{ registration.farmerid }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Number</th>
+                <td>{{ registration.number }}</td>
+            </tr>
+            <!-- Add more fields as needed -->
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+        Registration not found.
+    </div>
+    {% endif %}
+</div>
+
+{% endblock body %}
