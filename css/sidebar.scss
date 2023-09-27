@@ -14,9 +14,10 @@
 .sidebar {
     display: flex;
     flex-direction: row;
-    top: 60px;
     position: absolute;
+    top: 60px;
     bottom: 0;
+    width: g.$sidebar-width;
     font-size: 1.7rem;
     transition: width 200ms ease;
 }
@@ -28,7 +29,6 @@
     padding: 10px 10px 10px 10px;
     color: #fff;
     background-color: green;
-    width: g.$sidebar-width;
 }
 
 .icon_name {

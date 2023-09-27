@@ -4,7 +4,8 @@ $primary: #000;
 $secondary: #000;
 $accent: #000;
 
-$sidebar-width: 30px;
+$sidebar-width: 50px;
+$nav-size: 60px;
 
 body {
   margin: 0;
@@ -14,4 +15,8 @@ body {
 :root {
   padding: 0;
   margin: 0;
+}
+
+.hidden {
+  display: none !important;
 }

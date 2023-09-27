@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="/css/global.scss">
   <link rel="stylesheet" href="/css/navbar.scss">
   <link rel="stylesheet" href="/css/sidebar.scss">
-  <link rel="stylesheet" href="/css/loginbar.css">
+  <link rel="stylesheet" href="/css/Loginpage.css">
   <title>Vite App</title>
 </head>
 
 <body>
   <!-- insert navigation bar -->
   <nav>
-    <button class="start_button">    <!--nav is used for button so dont use it for any other-->
+    <button class="start_button"> <!--nav is used for button so dont use it for any other-->
       Get Started
     </button>
   </nav>
@@ -25,55 +25,50 @@
       <div><ion-icon name="home-outline"></ion-icon></div>
       <div><ion-icon name="settings-outline"></ion-icon></div>
       <div><ion-icon name="at-outline"></ion-icon></div>
-    </div>              <!-- In sidebar the class sidebar is given flex box property row and its child with column -->
+    </div> <!-- In sidebar the class sidebar is given flex box property row and its child with column -->
     <div class="icon_name">
       <div><a href>Home</a></div>
       <div><a href>Setting</a></div>
       <div><a href>About</a></div>
-      
+
     </div>
   </div>
 
   <!-- insert login page -->
   <!--login box html code-->
-  <section>
+  <section class="login-container hidden">
+    <div class="exit" id="login-exit">x<!-- @samarth x icon goes here --></div>
     <div class="form-box">
-        <div class="form-value">
-            <form action="">
-                <h2>Login</h2>
-                <div class="inputbox">
-                    <ion-icon name="mail-unread-outline"></ion-icon>
-                    <input type="email">
-                    <label for="">Email</label>
-                </div>
-                <div class="inputbox">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                    <input type="password">
-                    <label for="">password</label>
-                </div>
-                <div class="forget">
-                    <label for=""><input type="checkbox">Remember Me </label>
-                    <a href="#">Forget password</a>
-                </div>
-                <button>
-                    Log in
-                </button>
-                
-                <div class="register">
-                    <p>
-                        Don't have a account 
-                        <a href="#">
-                            Register
-                        </a>
-                    </p>
-                </div>
-            </form>
-        </div>
+      <div class="form-value">
+        <form action="">
+          <div class="exit" id="login-exit">x<!-- @samarth x icon goes here --></div>
+          <h2>Login</h2>
+          <div class="inputbox">
+            <ion-icon name="mail-unread-outline"></ion-icon>
+            <input type="email">
+            <label for="">Email</label>
+          </div>
+          <div class="inputbox">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            <input type="password">
+            <label for="">password</label>
+          </div>
+          <div class="forget">
+            <label for=""><input type="checkbox">Remember Me </label>
+            <a href="#">Forget password</a>
+          </div>
+          <button>
+            Log in
+          </button>
+          <div class="register">
+            Don't have a account? <a href="#">Register</a>
+          </div>
+        </form>
+      </div>
     </div>
-</section>
+  </section>
 
   <script type="module" src="/src/main.js"></script>
-  <script type="module" src="/src/i18n.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
