@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# smv's gitignore entries #
+
+bin
+include
+lib
+lib64
+share
+pyvenv.cfg
+
+.vscode
+
+# jatin's gitignore entries #
+
+# anjali's gitignore entries #
+
+# samarth's gitignore entries #
