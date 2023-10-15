@@ -10,10 +10,10 @@ setup:
 	@echo "-- installing requirements --"
 	@pip install -r requirements.txt -r ml/requirements.txt
 	@echo "----------- done! -----------"
+	@cd ml && make build
 
 build:
 	@cd vite && npm run build
-	@cd ml && make build
 
 run:
 	@python app.py
