@@ -1,0 +1,8 @@
+[submodule "ml"]
+	path = ml
+	url = git@github.com:Fresh-Fields/ml-official.git
+	branch = main
+[submodule "vite"]
+	path = vite
+	url = git@github.com:Fresh-Fields/frontend.git
+	branch = main
