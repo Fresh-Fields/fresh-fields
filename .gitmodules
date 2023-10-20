@@ -2,7 +2,9 @@
 	path = ml
 	url = https://github.com/Fresh-Fields/ml-official.git
 	branch = main
+	update = merge
 [submodule "vite"]
 	path = vite
 	url = https://github.com/Fresh-Fields/frontend.git
 	branch = main
+	update = merge
