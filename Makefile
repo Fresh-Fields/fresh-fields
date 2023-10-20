@@ -9,10 +9,12 @@ setup:
 	@source bin/activate
 	@echo "-- installing requirements --"
 	@pip install -r requirements.txt -r ml/requirements.txt
+	@echo "-- preparing sample dataset --"
+	@cd ml && make build && make generate
 	@echo "----------- done! -----------"
-	@cd ml && make build
 
 build:
+	@python splice.rec.data.py
 	@cd vite && npm run build
 
 run:

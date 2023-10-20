@@ -36,7 +36,7 @@ def analytics():
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
     content = request.get_json()
-    res = clf.predict([[float(x) for x in content["data"]]])
+    res = clf.predict([content["data"]])
     print(content, res)
     return make_response(jsonify({"response": int(res[0])}))
 
