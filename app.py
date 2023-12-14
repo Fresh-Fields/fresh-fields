@@ -33,6 +33,7 @@ def dashboard():
 def analytics():
     return render_template("ml.html")
 
+
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
     content = request.get_json()
