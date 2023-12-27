@@ -1,10 +1,13 @@
-from flask import Flask
-from flask import render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, make_response
+from flask_sqlalchemy import SQLAlchemy
+
+from datetime import datetime
 from pathlib import Path
-import db
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVC
 from joblib import load
+
+import watcher
 
 clf: SVC = load("./ml/out/crop.recommend.joblib")
 reg: RandomForestRegressor = load("./ml/out/yield.prediction.joblib")
@@ -18,9 +21,10 @@ app = Flask(
 )
 
 
-# @app.route("/")
-# def landing():
-#     return render_template("base.html")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test1.db"
+app.config["VITE_AUTO_INSERT"] = True
+
+# db = SQLAlchemy(app) # TODO merge Jatin's code
 
 
 @app.route("/dashboard")
@@ -29,9 +33,9 @@ def dashboard():
     return "TODO"
 
 
-@app.route("/")  # originally "/analytics"
-def analytics():
-    return render_template("ml.html")
+@app.route("/")
+def landing():
+    return render_template("landing.html")
 
 
 @app.route("/recommend", methods=["GET", "POST"])
@@ -54,4 +58,6 @@ def TODO_filler(file_loc: str):
     return render_template(file_loc)
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    watcher.start()
+    app.run(debug=True)
