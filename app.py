@@ -5,13 +5,16 @@ from datetime import datetime
 from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVC
+
+from keras.layers import Dense, LSTM
+from keras.models import Sequential
 from joblib import load
 
 import watcher
 
 clf: SVC = load("./ml/out/crop.recommend.joblib")
 reg: RandomForestRegressor = load("./ml/out/yield.prediction.joblib")
-
+price: Sequential = load("./ml/out/forecast.LSTM.Nagpur.Rice.joblib")
 
 app = Flask(
     __name__,
@@ -33,19 +36,14 @@ class User(db.Model):
     district = db.Column(db.String(200), nullable=False)
     name = db.Column(db.String(200), nullable=False)
 
-
-@app.route("/dashboard")
-# NOTE: since we this isn't a social media app we don't need
-def dashboard():
-    return "TODO"
-
-
 @app.route("/")
 def landing():
-    return render_template("landing.html")
+    return render_template("LandingPage.html")
 
+@app.route("/recommendpage")
+def mlpage():
+    return render_template("MLPage.html")
 
-# TODO change /recommend /yield
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
     content = request.get_json()
@@ -53,13 +51,11 @@ def recommend_result():
     print(content, res)
     return make_response(jsonify({"response": int(res[0])}))
 
-
 @app.route("/yield", methods=["GET", "POST"])
 def yield_result():
     content = request.get_json()
     res = reg.predict([content["data"]])
     return make_response(jsonify({"response": res[0]}))
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -74,7 +70,6 @@ def login():
             return render_template("login.html", error="Invalid login credentials")
 
     return render_template("login.html")
-
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():

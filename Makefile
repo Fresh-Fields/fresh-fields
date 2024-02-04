@@ -9,8 +9,7 @@ setup:
 	@source bin/activate
 	@echo "-- installing requirements --"
 	@pip install -r requirements.txt -r ml/requirements.txt
-	@echo "-- preparing sample dataset --"
-	@cd ml && make build && make generate
+	@pip install -r requirements.txt -r sensor-module-pseudo/requirements.txt
 	@echo "----------- done! -----------"
 
 build:

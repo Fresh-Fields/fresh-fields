@@ -8,3 +8,6 @@
 	url = https://github.com/Fresh-Fields/frontend.git
 	branch = main
 	update = merge
+[submodule "sensor-module-pseudo"]
+	path = sensor
+	url = git@github.com:Fresh-Fields/sensor-module-pseudo.git
