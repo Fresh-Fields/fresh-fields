@@ -40,9 +40,20 @@ class User(db.Model):
 def landing():
     return render_template("LandingPage.html")
 
-@app.route("/recommendpage")
+@app.route("/debug/ml")
 def mlpage():
     return render_template("MLPage.html")
+
+@app.route("/ml/recommend")
+def recommendation_page():
+    return render_template("CropRecommendation.html")
+
+@app.route("/ml/yield")
+def yield_page():
+    return render_template("YeildPrediction.html")
+@app.route("/ml/market")
+def price_page():
+    return render_template("PriceForecast.html")
 
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
