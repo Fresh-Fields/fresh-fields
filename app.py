@@ -5,16 +5,21 @@ from datetime import datetime
 from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVC
+import json
+
+import numpy as np
 
 from keras.layers import Dense, LSTM
 from keras.models import Sequential
 from joblib import load
+from sklearn.preprocessing import MinMaxScaler
 
 import watcher
 
 clf: SVC = load("./ml/out/crop.recommend.joblib")
 reg: RandomForestRegressor = load("./ml/out/yield.prediction.joblib")
 price: Sequential = load("./ml/out/forecast.LSTM.Nagpur.Rice.joblib")
+price_scaler: MinMaxScaler = load("./ml/out/scaler.Nagpur.joblib")
 
 app = Flask(
     __name__,
@@ -67,6 +72,24 @@ def yield_result():
     content = request.get_json()
     res = reg.predict([content["data"]])
     return make_response(jsonify({"response": res[0]}))
+
+@app.route("/price", methods=["GET", "POST"])
+def price_result():
+    X = []
+    sequence_length = 56
+    content = request.get_json()
+    df = content
+    df_tr = price_scaler.fit_transform(np.array(df).reshape(-1, 1))
+
+    for i in range(len(df_tr) - sequence_length):
+        X.append(df_tr[i:(i + sequence_length)])
+
+    X = np.array(X)
+    X = X.reshape((X.shape[0], X.shape[1],))
+    res = price_scaler.inverse_transform(price.predict(X)).flatten()
+
+    return make_response(json.dumps(res.tolist()))
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

@@ -11,7 +11,7 @@ class MyHandler(FileSystemEventHandler):
             return
         print(f"File {event.src_path} has been modified. Running the command...")
         # Replace the command below with the command you want to run
-        subprocess.run(["npm", "run", "build"], cwd="./vite", shell=False)
+        subprocess.run(["npm run build"], cwd="./vite", shell=True)
         time.sleep(1)
 
 
