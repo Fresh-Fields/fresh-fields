@@ -88,7 +88,7 @@ def price_result():
     X = X.reshape((X.shape[0], X.shape[1],))
     res = price_scaler.inverse_transform(price.predict(X)).flatten()
 
-    return make_response(json.dumps(res.tolist()))
+    return make_response(json.dumps(res.tolist()[-1]))
 
 
 @app.route("/login", methods=["GET", "POST"])
