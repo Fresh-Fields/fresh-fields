@@ -63,9 +63,8 @@ def price_page():
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
     content = request.get_json()
-    res = clf.predict([content["data"]])
-    print(content, res)
-    return make_response(jsonify({"response": int(res[0])}))
+    res = clf.predict_proba([content])
+    return make_response(jsonify(res.tolist()))
 
 @app.route("/yield", methods=["GET", "POST"])
 def yield_result():
