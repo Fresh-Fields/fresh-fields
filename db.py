@@ -8,13 +8,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test1.db"
 db = SQLAlchemy(app)
 
 class DB(db.Model):
-    name = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
     district = db.Column(db.Integer, nullable=False)
-    email = db.Column(db.String(200), nullable=False)
-    farmerid = db.Column(db.Integer, primary_key=True, nullable=False)
-    number = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self):
         pass

@@ -36,6 +36,8 @@ instance/*
 
 .vscode
 
+public/assets/*.mp4
+
 # jatin's gitignore entries #
 
 # anjali's gitignore entries #
