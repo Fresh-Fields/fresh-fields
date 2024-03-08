@@ -7,7 +7,9 @@ def fill_and_interpolate(file_path):
 
     # Convert 'Date' column to datetime format
     df["Price Date"] = pd.to_datetime(df["Price Date"])
-
+    df = df.drop(
+        columns=["Min Price (Rs./Quintal)", "Max Price (Rs./Quintal)"], errors="ignore"
+    )
     # Sort DataFrame by date
     df = df.sort_values(by="Price Date")
 

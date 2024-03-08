@@ -7,12 +7,14 @@ from flask import (
     make_response,
     url_for,
 )
-from flask_sqlalchemy import SQLAlchemy
 
-from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from datetime import date
+
 from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVC
+import pandas as pd
 import json
 
 import numpy as np
@@ -29,7 +31,7 @@ clf: SVC = load("./ml/out/crop.recommend.joblib")
 reg: RandomForestRegressor = load("./ml/out/yield.prediction.joblib")
 
 price_models = {}
-for district in ["Nagpur", "Bhiwandi", "Vasai", "Palghar", "Ulhasnagar"]:
+for district in ["Bhiwandi", "Vasai", "Palghar", "Ulhasnagar"]:
     price_models[district]: Pipeline = load(f"./ml/out/forecast.LSTM.{district}.joblib")
 
 app = Flask(
@@ -82,15 +84,31 @@ def price_page():
 @app.route("/recommend", methods=["GET", "POST"])
 def recommend_result():
     content = request.get_json()
-    res = clf.predict_proba([content])
+    print(content)
+    labels = [
+        "N",
+        "P",
+        "K",
+        "temperature",
+        "humidity",
+        "ph",
+        "rainfall",
+        "season",
+    ]
+    data = {}
+    for i in range(len(labels)):
+        data[labels[i]] = [content[i]]
+    X = pd.DataFrame(data)
+    res = clf.predict_proba(X)
+    print(res)
     return make_response(jsonify(res.tolist()))
 
 
 @app.route("/yield", methods=["GET", "POST"])
 def yield_result():
-    content = request.get_json()
-    res = reg.predict([content["data"]])
-    return make_response(jsonify({"response": res[0]}))
+    X = [request.get_json()]
+    res = np.array(reg.predict(X))
+    return make_response(jsonify(res.tolist()))
 
 
 @app.route("/price/<location>", methods=["POST"])
@@ -98,54 +116,57 @@ def price_result(location):
     if location not in price_models:
         return make_response(jsonify({"error": f"Model for {location} not found"}), 404)
 
+    print(f"location: {location}")
+
     price_model = price_models[location]
 
     sequence_length = 56
-    content = request.get_json()
 
-    df = content
+    df = pd.read_csv(f"./ml/data/{location}.Rice.csv")[-56:]
 
-    df_tr = price_model.named_steps["scaler"].transform(np.array(df).reshape(-1, 1))
+    df.loc[len(df)] = {
+        "Price Date": date.today().strftime("%Y-%m-%d"),
+        "Modal Price (Rs./Quintal)": df["Modal Price (Rs./Quintal)"].mode(),
+    }
 
+    df["Price Date"] = pd.to_datetime(df["Price Date"], format="%Y-%m-%d")
+    complete_dates = pd.date_range(
+        start=df["Price Date"].min(), end=df["Price Date"].max(), freq="D"
+    )
+    complete_df = pd.DataFrame({"Price Date": complete_dates})
+    df = pd.merge(complete_df, df, on="Price Date", how="left")
+
+    df["Modal Price (Rs./Quintal)"] = df["Modal Price (Rs./Quintal)"].ffill()
+
+    df.rename(
+        columns={"Modal Price (Rs./Quintal)": "Price", "Price Date": "Date"},
+        inplace=True,
+    )
+
+    df.set_index("Date", inplace=True)
+    df.sort_index(inplace=True)
+    df.index = pd.to_datetime(df.index)
+    df = df[-57:]
+
+    print(df.shape)
+
+    df_tr = price_model.named_steps["scaler"].transform(df)
     X = []
 
     for i in range(len(df_tr) - sequence_length):
         X.append(df_tr[i : (i + sequence_length)])
 
     X = np.array(X)
-    X = X.reshape((X.shape[0], X.shape[1], 1))
 
-    res = price_model.predict(X)
-    res = (
-        price_model.named_steps["scaler"]
-        .inverse_transform(res.reshape(-1, 1))
-        .flatten()
-    )
+    res = price_model.named_steps["model"].predict(X).reshape(-1, 1)
+    res = price_model.named_steps["scaler"].inverse_transform(res)
+    res = res.flatten()
+    res = np.array(df["Price"][-14:]) + res
+    res = [float(i) for i in res.tolist()]
+    print(type(res))
+    print(res)
 
-    return make_response(jsonify({"prediction": res.tolist()}))
-
-
-# @app.route("/price/<str:location>", methods=["GET", "POST"])
-# def price_result(location: str):
-#     X = []
-#     sequence_length = 56
-#     content = request.get_json()
-#     df = content
-#     df_tr = price_scaler.fit_transform(np.array(df).reshape(-1, 1))
-
-#     for i in range(len(df_tr) - sequence_length):
-#         X.append(df_tr[i : (i + sequence_length)])
-
-#     X = np.array(X)
-#     X = X.reshape(
-#         (
-#             X.shape[0],
-#             X.shape[1],
-#         )
-#     )
-#     res = price_scaler.inverse_transform(price.predict(X)).flatten()
-
-#     return make_response(json.dumps(res.tolist()[-1]))
+    return make_response(jsonify({"prediction": res}))
 
 
 @app.route("/login", methods=["POST"])
