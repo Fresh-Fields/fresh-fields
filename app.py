@@ -130,13 +130,13 @@ def price_result(location):
     }
 
     df["Price Date"] = pd.to_datetime(df["Price Date"], format="%Y-%m-%d")
-    complete_dates = pd.date_range(
-        start=df["Price Date"].min(), end=df["Price Date"].max(), freq="D"
-    )
-    complete_df = pd.DataFrame({"Price Date": complete_dates})
-    df = pd.merge(complete_df, df, on="Price Date", how="left")
+    # complete_dates = pd.date_range(
+    #     start=df["Price Date"].min(), end=df["Price Date"].max(), freq="D"
+    # )
+    # complete_df = pd.DataFrame({"Price Date": complete_dates})
+    # df = pd.merge(complete_df, df, on="Price Date", how="left")
 
-    df["Modal Price (Rs./Quintal)"] = df["Modal Price (Rs./Quintal)"].ffill()
+    # df["Modal Price (Rs./Quintal)"] = df["Modal Price (Rs./Quintal)"].ffill()
 
     df.rename(
         columns={"Modal Price (Rs./Quintal)": "Price", "Price Date": "Date"},
