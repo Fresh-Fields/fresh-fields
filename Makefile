@@ -6,10 +6,10 @@ setup:
 	@echo "------ setting up vite ------"
 	@cd vite && npm i
 	@echo "------- entering venv -------"
-	@source bin/activate
+	@source venv/bin/activate
 	@echo "-- installing requirements --"
 	@pip install -r requirements.txt -r ml/requirements.txt
-	@pip install -r requirements.txt -r sensor-module-pseudo/requirements.txt
+	@pip install -r requirements.txt -r sensor/requirements.txt
 	@echo "----------- done! -----------"
 
 build:
